@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  
+Parameters:
+  keypair:
+    Description: choose ur keypair
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: firstkey
+  imageIdParameter:
+    Description: choose ur image Id 
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-arm64
+Resources:
+
+  mySecGrp:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allows ssh and http # Required
+      GroupName: zebe-sec-grp
+      SecurityGroupIngress: 
+        - CidrIp: 0.0.0.0/0
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+
+  myWebServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref imageIdParameter
+      InstanceType: t2.micro
+      KeyName: !Ref keypair
+      SecurityGroupIds: 
+        - !Ref mySecGrp
+      Tags: 
+        - Key: Namae
+          Value: !Sub Web Server of ${AWS::StackName}
+      Tenancy: "String"
+      UserData: "String"  
+Outputs:
