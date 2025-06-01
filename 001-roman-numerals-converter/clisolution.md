@@ -28,7 +28,7 @@ aws ec2 create-security-group \
 
 - We can check the security Group with these commands
 ```bash
-aws ec2 describe-security-groups --group-names oktaws20_roman_numbers_converter_sec_grp
+aws ec2 describe-security-groups --group-names aws20_roman_numbers_converter_sec_grp
 ```
 
 2. Create Rules of security Group
@@ -76,7 +76,7 @@ yum update -y
 yum install python3
 pip3 install flask
 cd /home/ec2-user
-FOLDER="https://github.com/xxxxx/xxxxx/tree/main/001-roman-numerals-converter"
+FOLDER="https://github.com/zeynep13bayraktar/aws-projects/tree/main/001-roman-numerals-converter"
 wget ${FOLDER}/roman-numerals-converter-app.py
 mkdir templates && cd templates
 wget ${FOLDER}/templates/index.html
@@ -85,7 +85,7 @@ cd ..
 python3 roman-numerals-converter-app.py
 ```
 ```bash
-aws ec2 run-instances --image-id $LATEST_AMI --count 1 --instance-type t2.micro --key-name xxxx --security-groups aws20_roman_numbers_converter_sec_grp --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]' --user-data file:///home/ec2-user/userdata.sh
+aws ec2 run-instances --image-id $LATEST_AMI --count 1 --instance-type t2.micro --key-name firstkey --security-groups aws20_roman_numbers_converter_sec_grp --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=roman_numbers}]' --user-data file:///home/ec2-user/userdata.sh
 or
 
 aws ec2 run-instances \
